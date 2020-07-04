@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+  <title>Network</title>
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <style type="text/css">
+    #mynetwork {
+      width: 600px;
+      height: 400px;
+      border: 1px solid lightgray;
+    }
+  </style>
+</head>
+<body>
+<div id="mynetwork"></div>
+<textarea id="input" type="text" rows="10" cols="30" autofocus></textarea>
+<button onclick="render()">Render</button>
+<script type="text/javascript">
+  // provide data in the DOT language
+  var DOTstring = 'dinetwork {1 -> 1 -> 2; 2 -> 3; 2 -- 4; 2 -> 1}';
+  var parsedData = vis.parseDOTNetwork(DOTstring);
+  var data = {
+    nodes: parsedData.nodes,
+    edges: parsedData.edges
+  }
+  var options = parsedData.options;
+  var container = document.getElementById('mynetwork');
+  var network = new vis.Network(container, data, options);
+
+  function render() {
+    var input = document.getElementById('input').value;
+    input = input.replace(/(\r\n|\n|\r)/gm, "");
+    var parsedData = vis.parseDOTNetwork(input);
+    var data = {
+      nodes: parsedData.nodes,
+      edges: parsedData.edges
+    }
+    var options = parsedData.options;
+    var container = document.getElementById('mynetwork');
+    var network = new vis.Network(container, data, options);
+  }
+</script>
+</body>
+</html>
